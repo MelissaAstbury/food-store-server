@@ -24,3 +24,24 @@ exports.addNewFood = (req, res) => {
     }
   });
 };
+
+exports.updateFood = (req, res) => {
+  const { product_name, product_type, quantity, price } = req.body;
+  const sql = `UPDATE foods SET product_name='${product_name}', product_type='${product_type}', quantity=${quantity}, price=${price} WHERE id=${req.params.id}`;
+  db.query(sql, (err, food) => {
+    if (err) throw err;
+    res.status(200).json({
+      message: 'The specified food has been updated accordingly',
+    });
+  });
+};
+
+exports.deleteFood = (req, res) => {
+  const sql = `DELETE FROM foods WHERE id=${req.params.id}`;
+  db.query(sql, (err, food) => {
+    if (err) throw err;
+    res.status(202).json({
+      message: 'The specified food has been deleted',
+    });
+  });
+};
